@@ -13,6 +13,7 @@ declare global {
   interface Window {
     THREE?: unknown;
     __LENSWEAR_BOOTED?: boolean;
+    __lenswearScanReveals?: () => void;
   }
 }
 
@@ -48,12 +49,20 @@ function loadScript(src: string) {
   });
 }
 
+function scanReveals() {
+  window.__lenswearScanReveals?.();
+}
+
 export default function LenswearSite() {
+  useEffect(() => {
+    scanReveals();
+    const t = window.setTimeout(scanReveals, 120);
+    return () => window.clearTimeout(t);
+  });
+
   useEffect(() => {
     if (window.__LENSWEAR_BOOTED) return;
     window.__LENSWEAR_BOOTED = true;
-
-    document.body.classList.add("is-loading");
 
     (async () => {
       try {
@@ -61,12 +70,12 @@ export default function LenswearSite() {
           "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"
         );
         await loadScript("/site.js");
+        scanReveals();
       } catch (err) {
         console.error(err);
       }
     })();
   }, []);
-
   return (
     <>
       <div

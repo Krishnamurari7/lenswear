@@ -32,7 +32,9 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="is-loading">{children}</body>
+      <body className="is-loading" suppressHydrationWarning>
+        {children}
+      </body>
     </html>
   );
 }

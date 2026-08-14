@@ -21,9 +21,9 @@ export default function PortfolioCategory({ category }: Props) {
       />
       <div className="pf-grid-wrap">
         <ul className="pf-grid">
-          {category.projects.map((project) => (
+          {category.projects.map((project, i) => (
             <li key={`${category.id}-${project.name}`}>
-              <PortfolioCard project={project} />
+              <PortfolioCard project={project} index={i} />
             </li>
           ))}
         </ul>

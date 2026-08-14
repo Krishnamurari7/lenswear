@@ -14,7 +14,7 @@ export default function PortfolioBanner({ title, image, titleId }: Props) {
         style={{ backgroundImage: `url("${image}")` }}
       >
         <div className="pf-banner-veil">
-          <h2 id={titleId} className="pf-banner-title">
+          <h2 id={titleId} className="pf-banner-title caps">
             {title}
           </h2>
         </div>
