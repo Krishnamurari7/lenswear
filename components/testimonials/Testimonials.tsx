@@ -1,87 +1,93 @@
-import { TESTIMONIALS, type Testimonial } from "@/lib/testimonials";
+"use client";
 
-function Card({ item, index }: { item: Testimonial; index: number }) {
-  const num = String((index % TESTIMONIALS.length) + 1).padStart(2, "0");
+import { useCallback, useEffect, useRef, useState } from "react";
+import { TESTIMONIALS } from "@/lib/testimonials";
 
-  return (
-    <figure className="tm-card">
-      <div className="tm-card-top">
-        <span className="tm-index" aria-hidden="true">
-          {num}
-        </span>
-        <span className="tm-mark" aria-hidden="true">
-          &ldquo;
-        </span>
-      </div>
-      <blockquote className="tm-quote">{item.quote}</blockquote>
-      <figcaption className="tm-meta">
-        <span className="tm-name">{item.name}</span>
-        <span className="tm-detail">{item.detail}</span>
-      </figcaption>
-      <span className="tm-glow" aria-hidden="true" />
-    </figure>
-  );
-}
-
-function Track({
-  items,
-  reverse,
-}: {
-  items: Testimonial[];
-  reverse?: boolean;
-}) {
-  const loop = [...items, ...items];
-
-  return (
-    <div
-      className={`tm-rail${reverse ? " is-reverse" : ""}`}
-      aria-hidden={reverse}
-    >
-      <div className="tm-track">
-        {loop.map((item, i) => (
-          <Card key={`${item.name}-${i}`} item={item} index={i} />
-        ))}
-      </div>
-    </div>
-  );
-}
-
-/** Infinite scrolling client quotes — sits between works and footer */
+/** Simple horizontal carousel — Taj Studio testimonials block */
 export default function Testimonials() {
-  const rowA = TESTIMONIALS;
-  const rowB = [...TESTIMONIALS].reverse();
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [canPrev, setCanPrev] = useState(false);
+  const [canNext, setCanNext] = useState(true);
+
+  const syncNav = useCallback(() => {
+    const el = trackRef.current;
+    if (!el) return;
+    const max = el.scrollWidth - el.clientWidth - 2;
+    setCanPrev(el.scrollLeft > 2);
+    setCanNext(el.scrollLeft < max);
+  }, []);
+
+  const scrollBy = useCallback((dir: -1 | 1) => {
+    const el = trackRef.current;
+    if (!el) return;
+    const card = el.querySelector<HTMLElement>(".tm-item");
+    const styles = card ? getComputedStyle(el) : null;
+    const gap = styles ? parseFloat(styles.gap || "16") || 16 : 16;
+    const step = card ? card.offsetWidth + gap : el.clientWidth * 0.88;
+    el.scrollBy({ left: dir * step, behavior: "smooth" });
+  }, []);
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el) return;
+
+    syncNav();
+    el.addEventListener("scroll", syncNav, { passive: true });
+    addEventListener("resize", syncNav);
+
+    const timer = window.setInterval(() => {
+      const max = el.scrollWidth - el.clientWidth - 2;
+      if (el.scrollLeft >= max) el.scrollTo({ left: 0, behavior: "smooth" });
+      else scrollBy(1);
+    }, 5000);
+
+    return () => {
+      el.removeEventListener("scroll", syncNav);
+      removeEventListener("resize", syncNav);
+      window.clearInterval(timer);
+    };
+  }, [scrollBy, syncNav]);
 
   return (
-    <section className="tm" id="voices" aria-labelledby="tm-title" data-dark>
-      <div className="tm-bg" aria-hidden="true">
-        <span className="tm-orb tm-orb-a" />
-        <span className="tm-orb tm-orb-b" />
-      </div>
+    <section className="tm" id="voices" aria-labelledby="tm-title">
+      <div className="tm-inner wrap">
+        <h2 id="tm-title" className="tm-title caps">
+          Testimonials
+        </h2>
 
-      <div className="tm-head wrap">
-        <div className="tm-head-row">
-          <div className="tm-head-copy">
-            <p className="mono red">Client voices</p>
-            <h2 id="tm-title" className="tm-title">
-              <span className="ln">
-                <span>What they said</span>
-              </span>
-              <span className="ln">
-                <span>after the cut</span>
-              </span>
-            </h2>
+        <div className="tm-carousel">
+          <button
+            type="button"
+            className="tm-nav tm-nav-prev"
+            aria-label="Previous testimonial"
+            disabled={!canPrev}
+            onClick={() => scrollBy(-1)}
+          >
+            ‹
+          </button>
+
+          <div className="tm-track" ref={trackRef}>
+            {TESTIMONIALS.map((item) => (
+              <article key={item.name} className="tm-item">
+                <div className="tm-photo">
+                  <img src={item.image} alt="" loading="lazy" decoding="async" />
+                </div>
+                <h3 className="tm-name">{item.name}</h3>
+                <p className="tm-quote">{item.quote}</p>
+              </article>
+            ))}
           </div>
-          <div className="tm-stat" aria-label={`${TESTIMONIALS.length} client stories`}>
-            <b>{TESTIMONIALS.length}</b>
-            <span className="mono">Stories told</span>
-          </div>
+
+          <button
+            type="button"
+            className="tm-nav tm-nav-next"
+            aria-label="Next testimonial"
+            disabled={!canNext}
+            onClick={() => scrollBy(1)}
+          >
+            ›
+          </button>
         </div>
-        <div className="tm-rule" aria-hidden="true" />
-      </div>
-
-      <div className="tm-marquee">
-        <Track items={rowA} />
-        <Track items={rowB} reverse />
       </div>
     </section>
   );

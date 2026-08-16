@@ -2,25 +2,35 @@ import type { PortfolioProject } from "@/lib/portfolio";
 
 type Props = {
   project: PortfolioProject;
-  index?: number;
+  isVideo?: boolean;
 };
 
-/** Single project tile — Taj Studio grid item (image + name badge) */
-export default function PortfolioCard({ project, index = 0 }: Props) {
+/** Grid tile — image or autoplay video with poster fallback */
+export default function PortfolioCard({ project, isVideo }: Props) {
   const inner = (
     <>
       <div className="pf-card-media">
         {project.video ? (
-          <video
-            src={project.video}
-            poster={project.image}
-            aria-label={project.name}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-          />
+          <>
+            <img
+              src={project.image}
+              alt=""
+              loading="lazy"
+              decoding="async"
+              className="pf-card-poster"
+              aria-hidden="true"
+            />
+            <video
+              src={project.video}
+              poster={project.image}
+              aria-label={project.name}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="metadata"
+            />
+          </>
         ) : (
           <img
             src={project.image}
@@ -34,26 +44,15 @@ export default function PortfolioCard({ project, index = 0 }: Props) {
     </>
   );
 
+  const className = `pf-card${isVideo ? " pf-card-video" : ""}`;
+
   if (project.href) {
     return (
-      <a
-        className="pf-card"
-        href={project.href}
-        data-cursor="view"
-        style={{ transitionDelay: `${(index % 6) * 0.06}s` }}
-      >
+      <a className={className} href={project.href} data-cursor="view">
         {inner}
       </a>
     );
   }
 
-  return (
-    <article
-      className="pf-card"
-      data-cursor="view"
-      style={{ transitionDelay: `${(index % 6) * 0.06}s` }}
-    >
-      {inner}
-    </article>
-  );
+  return <article className={className}>{inner}</article>;
 }

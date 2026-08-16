@@ -6,8 +6,10 @@ type Props = {
   category: Category;
 };
 
-/** One category block: sticky title panel + grid that scrolls over it */
+/** One category: banner + mixed image/video grid (max 6 items) */
 export default function PortfolioCategory({ category }: Props) {
+  const items = category.projects.slice(0, 6);
+
   return (
     <section
       className="pf-cat"
@@ -20,13 +22,18 @@ export default function PortfolioCategory({ category }: Props) {
         titleId={`${category.id}-title`}
       />
       <div className="pf-grid-wrap">
-        <ul className="pf-grid">
-          {category.projects.map((project, i) => (
-            <li key={`${category.id}-${project.name}`}>
-              <PortfolioCard project={project} index={i} />
-            </li>
-          ))}
-        </ul>
+        {items.length > 0 && (
+          <ul className="pf-grid">
+            {items.map((project) => (
+              <li key={`${category.id}-${project.name}`}>
+                <PortfolioCard
+                  project={project}
+                  isVideo={Boolean(project.video)}
+                />
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </section>
   );

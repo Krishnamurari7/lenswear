@@ -4,20 +4,18 @@ type Props = {
   titleId?: string;
 };
 
-/** Sticky full-viewport category panel — grid scrolls over title + image */
+/** Full-width category banner — Taj Studio parallax panel */
 export default function PortfolioBanner({ title, image, titleId }: Props) {
   return (
-    <div className="pf-banner-pin">
-      <div
-        className="pf-banner"
-        data-dark
-        style={{ backgroundImage: `url("${image}")` }}
-      >
-        <div className="pf-banner-veil">
-          <h2 id={titleId} className="pf-banner-title caps">
-            {title}
-          </h2>
-        </div>
+    <div
+      className="pf-banner"
+      data-dark
+      style={{ backgroundImage: `url("${image}")` }}
+    >
+      <div className="pf-banner-veil">
+        <h2 id={titleId} className="pf-banner-title caps">
+          {title}
+        </h2>
       </div>
     </div>
   );

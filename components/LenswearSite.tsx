@@ -6,6 +6,7 @@ import {
   siteMarkupHero,
   siteMarkupFooter,
 } from "@/lib/markup";
+import NavGalleryDropdown from "@/components/NavGalleryDropdown";
 import PortfolioWorks from "@/components/portfolio/PortfolioWorks";
 import Testimonials from "@/components/testimonials/Testimonials";
 
@@ -82,6 +83,7 @@ export default function LenswearSite() {
         suppressHydrationWarning
         dangerouslySetInnerHTML={{ __html: siteMarkupChrome }}
       />
+      <NavGalleryDropdown />
       <main id="top">
         <div
           suppressHydrationWarning

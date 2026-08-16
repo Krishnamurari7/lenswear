@@ -19,6 +19,7 @@ export const siteMarkupChrome = `<div class="grain"></div>
 <header class="nav" id="nav">
   <a href="#top" aria-label="Lenswear Films, home"><img class="nav-logo" data-img="logo_mark" alt="Lenswear Films"></a>
   <nav class="nav-mid">
+    <div id="nav-gallery-slot"></div>
     <a href="#works">Works</a>
     <a href="#voices">Voices</a>
     <a href="#contact">Contact</a>
@@ -33,6 +34,7 @@ export const siteMarkupChrome = `<div class="grain"></div>
 <!-- menu -->
 <div class="menu" id="menu">
   <ul>
+    <li id="nav-gallery-menu-slot"></li>
     <li><a href="#works">Works</a></li>
     <li><a href="#voices">Voices</a></li>
     <li><a href="#contact">Contact</a></li>
