@@ -33,8 +33,8 @@ export const siteMarkupChrome = `<div class="grain"></div>
 
 <!-- menu -->
 <div class="menu" id="menu">
+  <div id="nav-gallery-menu-slot"></div>
   <ul>
-    <li id="nav-gallery-menu-slot"></li>
     <li><a href="#works">Works</a></li>
     <li><a href="#voices">Voices</a></li>
     <li><a href="#contact">Contact</a></li>

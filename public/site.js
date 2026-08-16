@@ -145,7 +145,7 @@ var nav = $('#nav');
   });
   addEventListener('scroll', function(){
     var y = scrollY;
-    if (!document.body.classList.contains('menu-open'))
+    if (!document.body.classList.contains('menu-open') && !COARSE)
       nav.classList.toggle('hide', y > last && y > 300);
     last = y;
     /* nav active section */
