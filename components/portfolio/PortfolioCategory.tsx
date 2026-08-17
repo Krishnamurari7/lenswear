@@ -20,6 +20,7 @@ export default function PortfolioCategory({ category }: Props) {
         title={category.title}
         image={category.banner}
         titleId={`${category.id}-title`}
+        focal={category.bannerFocal}
       />
       <div className="pf-grid-wrap">
         {items.length > 0 && (

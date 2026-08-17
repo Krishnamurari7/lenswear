@@ -8,34 +8,30 @@ var IMG = {
   "logo_mark": "/images/logo_mark.svg",
   "logo_line": "/images/logo_line.svg",
 
-  /* Wedding / signature frames */
-  "ct1": "/images/South%20Indian/IMG_8137.webp",
-  "ct2": "/images/Mixed/Black%20and%20White%20Modern%20Fashion%20Collection%20Flyer.webp",
-  "ct3": "/images/Mixed/DEE_6636.webp",
+  "ct1": "/Weddings/0R9A2935.JPG",
+  "ct2": "/Weddings/0R9A1496.JPG",
+  "ct3": "/Weddings/IMG_8119.jpg",
 
-  /* Studio / behind the work */
-  "desk": "/images/Mixed/IMG_7947.webp",
-  "naved1": "/images/Mixed/IMG_7947.webp",
-  "naved2": "/images/Mixed/IMG_8033.webp",
-  "naved3": "/images/Mixed/IMG_8056.webp",
+  "desk": "/BTS/_DSC7900.JPG",
+  "naved1": "/BTS/_DSC8009.JPG",
+  "naved2": "/BTS/_DSC8019.JPG",
+  "naved3": "/BTS/Image-55383.jpg",
 
-  /* Services + gallery */
-  "srv1": "/images/Mixed/3rd.webp",
-  "srv2": "/images/Mixed/2nd.webp",
-  "srv3": "/images/Jay%20%26%20Dhwani/Dusty%20Black%20Elegant%20Wedding%20Photo%20Collage%20Instagram%20Post.webp",
-  "srv4": "/images/Mixed/Black%20and%20White%20Modern%20Fashion%20Collection%20Flyer.webp",
-  "srv5": "/images/Mixed/IMG_8056.webp",
-  "srv6": "/images/Shilpa%20%26%20Manish/Monochrome%20Minimalist%20Fashion%20Instagram%20Post.webp",
+  "srv1": "/BTS/Image-64718.jpg",
+  "srv2": "/BTS/Image-55383.jpg",
+  "srv3": "/Weddings/IMG_8118.jpg",
+  "srv4": "/Event/Image-84673.jpg",
+  "srv5": "/Event/Image-54987.jpg",
+  "srv6": "/Event/Image-63492.jpg",
 
-  /* Extra strip / hero frames from each shoot */
-  "jd1": "/images/Jay%20%26%20Dhwani/1.webp",
-  "jd2": "/images/Jay%20%26%20Dhwani/Brown%20and%20Gold%20Simple%20Minimalist%20Elegant%20Luxury%20Jewelry%20Catalogue%20Instagram%20Post.webp",
-  "sm1": "/images/Shilpa%20%26%20Manish/IMG_8198.webp",
-  "sm2": "/images/Shilpa%20%26%20Manish/1.webp",
-  "mx1": "/images/Mixed/6c4858a4-c746-435e-86d6-da29b6b83a52.webp",
-  "mx2": "/images/Mixed/1b32b135-25ef-4395-b96c-a175ff99fd7a.webp",
-  "mx3": "/images/Mixed/Beige%20Minimalist%20Men%27s%20Fashion%20Photo%20Collage%20Instagram%20Post.webp",
-  "si1": "/images/South%20Indian/IMG_8137.webp"
+  "jd1": "/Weddings/0R9A1496.JPG",
+  "jd2": "/Weddings/" + encodeURIComponent("3 copy.JPG"),
+  "sm1": "/Event/Image-66293.jpg",
+  "sm2": "/Event/Image-85372.jpg",
+  "mx1": "/Weddings/DEE_6636.JPG",
+  "mx2": "/Video/Gurmeet-poster.jpg",
+  "mx3": "/Weddings/IMG_8202.jpg",
+  "si1": "/Weddings/IMG_8119.jpg"
 };
 
 
@@ -51,29 +47,29 @@ var vh = innerHeight, vw = innerWidth;
 
 /* ---------------- content ---------------- */
 var STRIP = [
-  ['ct1','Wedding'],['jd1','Jay & Dhwani'],['srv4','Commercial'],['sm1','Bridal party'],
-  ['ct3','Portrait'],['mx1','Riya & Vishal'],['srv6','On location'],['mx2','Details'],
-  ['srv3','Wedding day'],['srv2','Studio'],['srv5','Moments'],['desk','On set'],
-  ['si1','South Indian'],['sm2','Groom'],['mx3','Bridal'],['jd2','Jewellery']
+  ['ct1','Wedding'],['jd1','Couple'],['srv4','Concert'],['srv5','Live stage'],
+  ['ct3','Ceremony'],['srv1','Commercial'],['srv6','Vocalist'],['desk','On set'],
+  ['srv3','Candid'],['naved1','Scene'],['sm1','Duet'],['naved3','Studio'],
+  ['si1','South Indian'],['jd2','Intimate'],['srv2','Campaign'],['sm2','Solo']
 ];
 var FRAMES = [
   ['ct1','Weddings','Full-day coverage · films · albums'],
-  ['jd1','Jay & Dhwani','Ceremony · portraits · album'],
-  ['srv4','Commercial','Lookbooks · campaigns · brand films'],
-  ['ct3','Portrait','Night light · doorway · stills'],
-  ['srv1','Post-production','Edit · colour · sound · delivery'],
-  ['sm1','Bridal stories','Getting ready · tribe · tradition'],
-  ['srv6','On location','Outstation, monsoon, whatever it takes'],
-  ['mx1','Riya & Vishal','Couple portraits · celebration']
+  ['jd1','Couple','Ceremony · portraits · album'],
+  ['srv4','Events','Concerts · stage · live coverage'],
+  ['ct3','Ceremony','Mandap · guests · stills'],
+  ['desk','Films','On set · monitor · grade'],
+  ['srv5','Live stage','Concerts · energy · night'],
+  ['srv1','Commercial','Campaigns · talent · brand films'],
+  ['naved1','On location','BTS · scene · coverage']
 ];
 var SERVICES = [
-  ['Post Production Services','Edit, colour, sound and delivery — including footage we did not shoot.','srv1'],
-  ['Photography & Videography','Stills and motion from one team, on the same day, matched in the grade.','srv3'],
-  ['Small Studio for Indoor Shoots','Our own floor on Film City Road for portraits, products and tests.','srv2'],
-  ['Commercial & Fashion','Lookbooks, campaigns and brand films, from treatment to master.','srv4'],
-  ['Wedding & Events','Weddings, receptions, concerts and everything that only happens once.','ct1']
+  ['Post Production Services','Edit, colour, sound and delivery — including footage we did not shoot.','desk'],
+  ['Photography & Videography','Stills and motion from one team, on the same day, matched in the grade.','ct1'],
+  ['Small Studio for Indoor Shoots','Our own floor on Film City Road for portraits, products and tests.','naved1'],
+  ['Commercial & Fashion','Lookbooks, campaigns and brand films, from treatment to master.','srv1'],
+  ['Wedding & Events','Weddings, receptions, concerts and everything that only happens once.','srv4']
 ];
-var HERO_SET = ['ct1','jd1','srv4','ct3','sm1','mx1','srv6','srv5','desk'];
+var HERO_SET = ['ct1','jd1','srv4','ct3','srv5','srv1','srv6','desk','naved1'];
 
 /* ---------------- images into the DOM ---------------- */
 $$('[data-img]').forEach(function(el){
@@ -84,16 +80,18 @@ $$('[data-img]').forEach(function(el){
 /* ---------------- loader ---------------- */
 (function(){
   var loader = $('#loader'), count = $('#lcount');
+  if (!loader) { document.body.classList.remove('is-loading'); return; }
   requestAnimationFrame(function(){ loader.classList.add('go'); });
   var t0 = performance.now(), dur = REDUCED ? 320 : 2050;
   (function step(now){
     var p = clamp((now-t0)/dur, 0, 1), e = 1-Math.pow(1-p,3);
-    count.textContent = (Math.round(e*100)<10?'0':'') + Math.round(e*100);
+    if (count) count.textContent = (Math.round(e*100)<10?'0':'') + Math.round(e*100);
     if (p<1) requestAnimationFrame(step);
     else {
       loader.classList.add('done');
       document.body.classList.remove('is-loading');
-      $('#hero').classList.add('in');
+      var heroEl = $('#hero');
+      if (heroEl) heroEl.classList.add('in');
     }
   })(t0);
 })();
@@ -105,7 +103,8 @@ $$('[data-img]').forEach(function(el){
   setInterval(function(){
     var ms = Date.now()-t0, s = Math.floor(ms/1000);
     var str = pad(Math.floor(s/3600))+':'+pad(Math.floor(s/60)%60)+':'+pad(s%60)+':'+pad(Math.floor((ms%1000)/41.67));
-    a.textContent = str; b.textContent = 'Rec ' + str;
+    if (a) a.textContent = str;
+    if (b) b.textContent = 'Rec ' + str;
   }, 90);
 })();
 
@@ -143,24 +142,35 @@ var nav = $('#nav');
     if (e.target.closest('a')){ document.body.classList.remove('menu-open');
       burger.setAttribute('aria-expanded','false'); }
   });
-  addEventListener('scroll', function(){
-    var y = scrollY;
-    if (!document.body.classList.contains('menu-open') && !COARSE)
-      nav.classList.toggle('hide', y > last && y > 300);
-    last = y;
-    /* nav active section */
-    var links = $$('.nav-mid a, .menu a');
-    var ids = ['works','voices','contact'];
+  function syncNav(){
+    var links = $$('.nav-mid a, .menu ul a');
+    var path = (location.pathname || '/').replace(/\/$/, '') || '/';
+    if (path === '/contact') {
+      links.forEach(function(a){
+        a.classList.toggle('active', (a.getAttribute('href') || '') === '/contact');
+      });
+      return;
+    }
+    var ids = ['works','voices'];
     var cur = '';
     for (var i=0;i<ids.length;i++){
       var el = document.getElementById(ids[i]);
       if (el && el.getBoundingClientRect().top <= vh*0.42) cur = ids[i];
     }
     links.forEach(function(a){
-      var href = a.getAttribute('href');
-      a.classList.toggle('active', href === '#'+cur);
+      var href = a.getAttribute('href') || '';
+      var hash = href.split('#')[1] || '';
+      a.classList.toggle('active', !!cur && hash === cur);
     });
+  }
+  addEventListener('scroll', function(){
+    var y = scrollY;
+    if (!document.body.classList.contains('menu-open') && !COARSE)
+      nav.classList.toggle('hide', y > last && y > 300);
+    last = y;
+    syncNav();
   }, {passive:true});
+  syncNav();
 })();
 
 /* ---------------- photo strip ---------------- */
@@ -291,6 +301,8 @@ function photoMesh(key, height, onReady){
 var hero = null;
 function initHero(){
   var canvas = $('#heroCanvas'), sec = $('#hero');
+  if (!canvas || !sec) return;
+  if (hero) return;
   if (!HAS3D) { canvas.style.display='none'; return; }
   var r;
   try { r = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true}); }
@@ -317,8 +329,21 @@ function initHero(){
   });
   hero = {r:r, scene:scene, cam:cam, g:g, items:items, sec:sec, vis:true, dolly:0};
   if ('IntersectionObserver' in window)
-    new IntersectionObserver(function(e){ hero.vis = e[0].isIntersecting; },{threshold:0.01}).observe(sec);
+    new IntersectionObserver(function(e){ if (hero) hero.vis = e[0].isIntersecting; },{threshold:0.01}).observe(sec);
 }
+function teardownHero(){
+  if (!hero) return;
+  try {
+    hero.items.forEach(function(it){
+      if (it.m.geometry) it.m.geometry.dispose();
+      if (it.m.material) it.m.material.dispose();
+    });
+    hero.r.dispose();
+  } catch (e) {}
+  hero = null;
+}
+window.__lenswearBootHero = initHero;
+window.__lenswearTeardownHero = teardownHero;
 
 /* ---------------- the FPV flight ---------------- */
 var flight = null;
@@ -434,7 +459,7 @@ function frame(now){
   }
 
   /* hero */
-  if (hero && hero.vis){
+  if (hero && hero.vis && hero.sec && document.contains(hero.sec)){
     var hr = hero.sec.getBoundingClientRect();
     var hp = clamp(-hr.top / Math.max(1, hero.sec.offsetHeight), 0, 1);
     hero.dolly = lerp(hero.dolly, hp*9, K(0.08));
@@ -517,7 +542,7 @@ var GAL = $$('.gal .g').map(function(f){
 /* ---------------- resize ---------------- */
 function onResize(){
   vh = innerHeight; vw = innerWidth;
-  if (hero){
+  if (hero && hero.sec && document.contains(hero.sec)){
     var s = hero.sec;
     hero.r.setSize(s.clientWidth, s.clientHeight, false);
     hero.cam.aspect = s.clientWidth/s.clientHeight; hero.cam.updateProjectionMatrix();

@@ -17,16 +17,17 @@ export const siteMarkupChrome = `<div class="grain"></div>
 
 <!-- nav -->
 <header class="nav" id="nav">
-  <a href="#top" aria-label="Lenswear Films, home"><img class="nav-logo" data-img="logo_mark" alt="Lenswear Films"></a>
+  <a href="/" aria-label="Lenswear Films, home"><img class="nav-logo" data-img="logo_mark" alt="Lenswear Films"></a>
   <nav class="nav-mid">
     <div id="nav-gallery-slot"></div>
-    <a href="#works">Works</a>
-    <a href="#voices">Voices</a>
-    <a href="#contact">Contact</a>
+    <a href="/#works">Works</a>
+    <a href="/#voices">Voices</a>
+    <a href="/contact">Contact</a>
   </nav>
   <div class="nav-right">
     <span class="rec" aria-hidden="true"><i></i><span id="tc">00:00:00:00</span></span>
     <a class="nav-tel" href="tel:+919022766668">+91 90227 66668</a>
+    <a class="nav-wa" href="https://wa.me/919022766668" target="_blank" rel="noopener" data-cursor="Chat">WhatsApp us</a>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
   </div>
 </header>
@@ -35,10 +36,11 @@ export const siteMarkupChrome = `<div class="grain"></div>
 <div class="menu" id="menu">
   <div id="nav-gallery-menu-slot"></div>
   <ul>
-    <li><a href="#works">Works</a></li>
-    <li><a href="#voices">Voices</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="/#works">Works</a></li>
+    <li><a href="/#voices">Voices</a></li>
+    <li><a href="/contact">Contact</a></li>
   </ul>
+  <a class="nav-wa" href="https://wa.me/919022766668" target="_blank" rel="noopener">WhatsApp us</a>
   <div class="menu-foot">
     <span class="mono">Goregaon · Mumbai</span>
     <span class="mono">+91 90227 66668</span>
@@ -78,19 +80,32 @@ export const siteMarkupHero = `
 
 export const siteMarkupFooter = `
 <!-- ============ FOOTER ============ -->
-<footer class="foot" id="contact" data-dark>
+<footer class="foot" data-dark>
   <div class="wrap">
-    <div class="foot-line" id="footLine"><img data-img="logo_line" alt="Lenswear Films"></div>
-    <div class="foot-cols">
-      <div><h4>Elsewhere</h4><ul>
-        <li><a href="https://www.instagram.com/lenswear" target="_blank" rel="noopener">Instagram</a></li>
-        <li><a href="https://wa.me/919022766668" target="_blank" rel="noopener">WhatsApp</a></li>
-        <li><a href="mailto:Lenswearphotography@gmail.com">Email</a></li>
-        <li><a href="tel:+919022766668">+91 90227 66668</a></li></ul></div>
-      <div><h4>Studio address</h4>
-        <p>16th, Shree Wageshwari, opp. Satellite royal<br>Film City Road, Pankaj Shah Marg,<br>Goregaon, Mumbai, Maharashtra 400063</p></div>
+    <div class="foot-main">
+      <div class="foot-col">
+        <h4>Elsewhere</h4>
+        <ul>
+          <li><a href="https://www.instagram.com/lenswear" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://wa.me/919022766668" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:Lenswearphotography@gmail.com">Email</a></li>
+          <li><a href="tel:+919022766668">+91 90227 66668</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h4>Studio address</h4>
+        <p>16th, Shree Wageshwari, opp. Satellite royal<br>Film City Road, Pankaj Shah Marg,<br>Goregaon, Mumbai, Maharashtra 400063</p>
+      </div>
+      <div class="foot-col foot-col-cta">
+        <h4>Enquire</h4>
+        <p class="foot-cta-copy">Now booking 2026 &amp; 2027 weddings.</p>
+        <a class="foot-cta" href="https://wa.me/919022766668" target="_blank" rel="noopener"><span>WhatsApp us</span></a>
+      </div>
     </div>
     <div class="foot-base">
+      <a class="foot-brand" id="footLine" href="/" aria-label="Lenswear Films, home">
+        <img data-img="logo_line" alt="Lenswear Films">
+      </a>
       <span class="mono">© 2026 Lenswear Films</span>
       <span class="mono" id="footTc">Rec 00:00:00:00</span>
       <span class="mono">Mumbai, India</span>

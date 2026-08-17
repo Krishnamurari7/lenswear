@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import SiteShell from "@/components/SiteShell";
 
 export const metadata: Metadata = {
   title: "Lenswear Films — Wedding · Films · Post-Production · Mumbai",
@@ -33,7 +34,7 @@ export default function RootLayout({
         />
       </head>
       <body className="is-loading" suppressHydrationWarning>
-        {children}
+        <SiteShell>{children}</SiteShell>
       </body>
     </html>
   );

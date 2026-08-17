@@ -7,6 +7,10 @@ type Props = {
 
 /** Grid tile — image or autoplay video with poster fallback */
 export default function PortfolioCard({ project, isVideo }: Props) {
+  const crop = project.focal
+    ? ({ objectPosition: project.focal } as const)
+    : undefined;
+
   const inner = (
     <>
       <div className="pf-card-media">
@@ -19,6 +23,7 @@ export default function PortfolioCard({ project, isVideo }: Props) {
               decoding="async"
               className="pf-card-poster"
               aria-hidden="true"
+              style={crop}
             />
             <video
               src={project.video}
@@ -29,6 +34,7 @@ export default function PortfolioCard({ project, isVideo }: Props) {
               loop
               playsInline
               preload="metadata"
+              style={crop}
             />
           </>
         ) : (
@@ -37,6 +43,7 @@ export default function PortfolioCard({ project, isVideo }: Props) {
             alt={project.name}
             loading="lazy"
             decoding="async"
+            style={crop}
           />
         )}
       </div>
@@ -44,7 +51,9 @@ export default function PortfolioCard({ project, isVideo }: Props) {
     </>
   );
 
-  const className = `pf-card${isVideo ? " pf-card-video" : ""}`;
+  const className = `pf-card${isVideo ? " pf-card-video" : ""}${
+    project.fit === "contain" ? " pf-card-contain" : ""
+  }`;
 
   if (project.href) {
     return (

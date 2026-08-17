@@ -1,4 +1,4 @@
-import { PORTFOLIO_CATEGORIES } from "./portfolio";
+import { asset, PORTFOLIO_CATEGORIES } from "./portfolio";
 
 export type NavGalleryMedia = {
   src: string;
@@ -25,13 +25,22 @@ function folderFromPath(path: string): string {
   return parts[0] === "images" ? parts[1]! : parts[0]!;
 }
 
+function talentName(name: string): string | null {
+  if (/shubman/i.test(name)) return "Shubman Gill";
+  if (/kajal/i.test(name)) return "Kajal Aggarwal";
+  if (/gurmeet/i.test(name)) return "Gurmeet Choudhary";
+  return null;
+}
+
 function albumName(name: string, folder: string): string {
-  if (folder === "Mixed") return name;
-  if (folder === "Kajal Agraval") return "Kajal Aggarwal";
-  if (folder === "Shubman Gill") return "Shubman Gill";
+  const talent = talentName(name);
+  if (talent) return talent;
+  if (folder === "Weddings") return "Weddings";
+  if (folder === "BTS") return "Behind the scenes";
+  if (folder === "Event") return "Live events";
+  if (folder === "Video") return name.split("—")[0]?.trim() || name;
   const base = name.replace(/\s+II$/i, "").trim();
-  const dash = base.split("—")[0]?.trim();
-  return dash || base;
+  return base.split("—")[0]?.trim() || base;
 }
 
 function albumGroupKey(
@@ -39,21 +48,26 @@ function albumGroupKey(
   folder: string,
   name: string
 ): string {
-  if (folder === "Mixed") return `${categoryId}::${name}`;
+  const talent = talentName(name);
+  if (talent) return `${categoryId}::${talent}`;
   return `${categoryId}::${folder}`;
 }
 
-/** Extra frames per shoot folder (from site image registry) */
+/** Extra frames per shoot folder */
 const ALBUM_EXTRAS: Record<string, string[]> = {
-  "Jay & Dhwani": [
-    "/images/Jay%20%26%20Dhwani/Brown%20and%20Gold%20Simple%20Minimalist%20Elegant%20Luxury%20Jewelry%20Catalogue%20Instagram%20Post.webp",
-    "/images/Jay%20%26%20Dhwani/Dusty%20Black%20Elegant%20Wedding%20Photo%20Collage%20Instagram%20Post.webp",
+  Weddings: [
+    asset("Weddings", "1.jpg"),
+    asset("Weddings", "1 2.PNG"),
+    asset("Weddings", "IMG_7992.PNG"),
+    asset("Weddings", "IMG_8202.jpg"),
+    asset("Weddings", "IMG_7944.PNG"),
+    asset("Weddings", "IMG_7947.jpg"),
+    asset("Weddings", "Black and White Modern Fashion Collection Flyer.PNG"),
+    asset(
+      "Weddings",
+      "Monochrome Minimalist Fashion Instagram Post 2.PNG"
+    ),
   ],
-  "Shilpa & Manish": [
-    "/images/Shilpa%20%26%20Manish/1.webp",
-    "/images/Shilpa%20%26%20Manish/Monochrome%20Minimalist%20Fashion%20Instagram%20Post.webp",
-  ],
-  "South Indian": ["/images/South%20Indian/1.webp"],
 };
 
 function uniqueMedia(media: NavGalleryMedia[]): NavGalleryMedia[] {
