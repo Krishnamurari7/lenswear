@@ -5,8 +5,8 @@
    and everything — page and 3D — updates.
    ========================================================= */
 var IMG = {
-  "logo_mark": "/images/logo_mark.svg",
-  "logo_line": "/images/logo_line.svg",
+  "logo_mark": "/images/logo.png",
+  "logo_line": "/images/logo.png",
 
   "ct1": "/Weddings/0R9A2935.JPG",
   "ct2": "/Weddings/0R9A1496.JPG",
@@ -69,7 +69,11 @@ var SERVICES = [
   ['Commercial & Fashion','Lookbooks, campaigns and brand films, from treatment to master.','srv1'],
   ['Wedding & Events','Weddings, receptions, concerts and everything that only happens once.','srv4']
 ];
-var HERO_SET = ['ct1','jd1','srv4','ct3','srv5','srv1','srv6','desk','naved1'];
+var HERO_ARC = [
+  'ct1','jd1','srv1','srv4','ct3',
+  'srv5','desk','srv6','jd2','sm1',
+  'naved1','srv3','mx1','sm2','naved3'
+];
 
 /* ---------------- images into the DOM ---------------- */
 $$('[data-img]').forEach(function(el){
@@ -133,15 +137,35 @@ var CUR = {x:vw/2,y:vh/2,rx:vw/2,ry:vh/2,mx:0,my:0};
 var nav = $('#nav');
 (function(){
   var burger = $('#burger'), menu = $('#menu'), last = 0;
+  if (!nav || !burger || !menu) return;
   burger.addEventListener('click', function(){
     var open = document.body.classList.toggle('menu-open');
     burger.setAttribute('aria-expanded', open?'true':'false');
     burger.setAttribute('aria-label', open?'Close menu':'Open menu');
+    if (open) nav.classList.remove('hide');
   });
   menu.addEventListener('click', function(e){
-    if (e.target.closest('a')){ document.body.classList.remove('menu-open');
-      burger.setAttribute('aria-expanded','false'); }
+    if (e.target.closest('a') || e.target.closest('button.menu-gal-tile')){
+      document.body.classList.remove('menu-open');
+      burger.setAttribute('aria-expanded','false');
+      burger.setAttribute('aria-label','Open menu');
+    }
   });
+  function syncNavChrome(){
+    var y = scrollY;
+    nav.classList.toggle('scrolled', y > 24);
+    var heroEl = $('#hero');
+    var onContact = ((location.pathname || '/').replace(/\/$/, '') || '/') === '/contact';
+    var overHero = !!(heroEl && heroEl.getBoundingClientRect().bottom > 72);
+    document.body.classList.toggle('on-dark', onContact || overHero);
+    if (!document.body.classList.contains('menu-open')){
+      var hide = y > last && y > 280;
+      var show = y < last || y < 80;
+      if (hide) nav.classList.add('hide');
+      if (show) nav.classList.remove('hide');
+    }
+    last = y;
+  }
   function syncNav(){
     var links = $$('.nav-mid a, .menu ul a');
     var path = (location.pathname || '/').replace(/\/$/, '') || '/';
@@ -164,12 +188,10 @@ var nav = $('#nav');
     });
   }
   addEventListener('scroll', function(){
-    var y = scrollY;
-    if (!document.body.classList.contains('menu-open') && !COARSE)
-      nav.classList.toggle('hide', y > last && y > 300);
-    last = y;
+    syncNavChrome();
     syncNav();
   }, {passive:true});
+  syncNavChrome();
   syncNav();
 })();
 
@@ -211,8 +233,13 @@ var nav = $('#nav');
     row.innerHTML = '<span class="k">0'+(i+1)+'</span><div><h3 class="caps">'+s[0]+'</h3>'+
       '<p>'+s[1]+'</p></div><span class="go">Enquire →</span>';
     row.addEventListener('click', function(){
-      var el = $('#contact');
-      if (el) el.scrollIntoView({behavior: REDUCED?'auto':'smooth'});
+      var path = (location.pathname || '/').replace(/\/$/, '') || '/';
+      if (path === '/contact') {
+        var el = $('#contact');
+        if (el) el.scrollIntoView({behavior: REDUCED?'auto':'smooth'});
+        return;
+      }
+      location.assign('/contact');
     });
     box.appendChild(row);
   });
@@ -297,49 +324,155 @@ function photoMesh(key, height, onReady){
   return m;
 }
 
-/* ---------------- hero: frames adrift ---------------- */
+/* ---------------- hero: infinite curved marquee ---------------- */
 var hero = null;
-function initHero(){
-  var canvas = $('#heroCanvas'), sec = $('#hero');
-  if (!canvas || !sec) return;
-  if (hero) return;
-  if (!HAS3D) { canvas.style.display='none'; return; }
-  var r;
-  try { r = new THREE.WebGLRenderer({canvas:canvas, antialias:true, alpha:true}); }
-  catch(e){ canvas.style.display='none'; return; }
-  r.setPixelRatio(Math.min(devicePixelRatio||1, COARSE?1.6:2));
-  r.setSize(sec.clientWidth, sec.clientHeight, false);
-  var scene = new THREE.Scene();
-  scene.fog = new THREE.Fog(0x0B0B0C, 10, 36);
-  var cam = new THREE.PerspectiveCamera(46, sec.clientWidth/sec.clientHeight, 0.1, 60);
-  var g = new THREE.Group(); scene.add(g);
-  var seeds = [
-    [-3.5, 1.35,-4.4, 2.7],[ 3.7,-1.15,-5.0, 3.0],[-4.3,-1.85,-8.2, 2.6],
-    [ 4.5, 1.95,-9.0, 2.9],[-2.1, 2.75,-12.4, 2.5],[ 2.3,-2.55,-13.2, 2.7],
-    [-5.1, 0.35,-16.6, 2.8],[ 5.2, 0.85,-17.4, 2.6],[ 0.15,-1.2,-20.5, 3.2]
-  ];
-  var items = [];
-  HERO_SET.forEach(function(k,i){
-    var s = seeds[i % seeds.length];
-    var m = photoMesh(k, s[3]);
-    m.position.set(s[0], s[1], s[2]);
-    m.rotation.y = (s[0] > 0 ? -0.22 : 0.22);
-    m.rotation.z = (i%2?1:-1) * 0.015;
-    g.add(m); items.push({m:m, base:s[1], ph:i*1.3});
+var HERO_WORDS = ['Wedding','Birthday','Anniversary','Film','Concert','Commercial','Fashion','Event'];
+function hydrateImgs(root){
+  var nodes = (root || document).querySelectorAll('[data-img]');
+  Array.prototype.forEach.call(nodes, function(el){
+    var k = el.getAttribute('data-img');
+    if (IMG[k] && el.getAttribute('src') !== IMG[k]) el.src = IMG[k];
   });
-  hero = {r:r, scene:scene, cam:cam, g:g, items:items, sec:sec, vis:true, dolly:0};
+}
+var HERO_WAVE = [
+  {r:'-12deg', y:'36px'},
+  {r:'-6deg',  y:'14px'},
+  {r:'0deg',   y:'0px'},
+  {r:'6deg',   y:'14px'},
+  {r:'12deg',  y:'36px'}
+];
+function buildHeroArc(track){
+  if (!track || track.dataset.built === '1') return;
+  var html = '';
+  for (var r = 0; r < 2; r++){
+    HERO_ARC.forEach(function(k, i){
+      if (!IMG[k]) return;
+      var w = HERO_WAVE[i % HERO_WAVE.length];
+      html += '<figure class="hero-frame" style="--r:'+w.r+';--y:'+w.y+';--i:'+(i%HERO_ARC.length)+'">'+
+        '<img src="'+IMG[k]+'" alt="" loading="lazy" decoding="async"></figure>';
+    });
+  }
+  track.innerHTML = html;
+  track.dataset.built = '1';
+}
+function stopHeroRotate(){
+  if (!hero) return;
+  if (hero.rotateT){ clearTimeout(hero.rotateT); hero.rotateT = 0; }
+}
+function typeHeroWord(word, dir, done){
+  if (!hero || !hero.wordEl) return;
+  var el = hero.wordEl;
+  var i = dir > 0 ? 0 : word.length;
+  var stepMs = 72;
+  function step(){
+    if (!hero || !hero.wordEl) return;
+    if (hero.vis === false){
+      hero.rotateT = setTimeout(step, 400);
+      return;
+    }
+    i += dir;
+    el.textContent = word.slice(0, Math.max(0, i));
+    if ((dir > 0 && i < word.length) || (dir < 0 && i > 0)){
+      hero.rotateT = setTimeout(step, stepMs);
+    } else if (done) {
+      done();
+    }
+  }
+  step();
+}
+function tickHeroRotate(){
+  if (!hero || !hero.wordEl || REDUCED) return;
+  if (hero.vis === false){
+    hero.rotateT = setTimeout(tickHeroRotate, 900);
+    return;
+  }
+  var cur = HERO_WORDS[hero.wordI];
+  var next = (hero.wordI + 1) % HERO_WORDS.length;
+  var el = hero.wordEl;
+  el.classList.add('is-in');
+  el.classList.remove('is-out');
+  /* descending: drop one letter at a time, then ascending into the next word */
+  typeHeroWord(cur, -1, function(){
+    hero.wordI = next;
+    typeHeroWord(HERO_WORDS[next], 1, function(){
+      hero.rotateT = setTimeout(tickHeroRotate, 1600);
+    });
+  });
+}
+function startHeroRotate(){
+  if (!hero || !hero.wordEl) return;
+  stopHeroRotate();
+  if (REDUCED){
+    hero.wordEl.textContent = HERO_WORDS[hero.wordI || 0];
+    hero.wordEl.classList.add('is-in');
+    hero.wordEl.classList.remove('is-out');
+    return;
+  }
+  /* first word types in ascending, then the cycle continues */
+  hero.wordEl.textContent = '';
+  hero.wordEl.classList.add('is-in');
+  hero.wordEl.classList.remove('is-out');
+  typeHeroWord(HERO_WORDS[hero.wordI || 0], 1, function(){
+    hero.rotateT = setTimeout(tickHeroRotate, 1600);
+  });
+}
+function bindHeroParallax(sec, arc){
+  if (REDUCED || COARSE || !arc) return function(){};
+  var mx = 0, my = 0, cx = 0, cy = 0, raf = 0, live = true;
+  function tick(){
+    if (!live) return;
+    cx = lerp(cx, mx, 0.08);
+    cy = lerp(cy, my, 0.08);
+    arc.style.setProperty('--px', (cx * 18).toFixed(2) + 'px');
+    arc.style.setProperty('--py', (cy * 10).toFixed(2) + 'px');
+    raf = requestAnimationFrame(tick);
+  }
+  function onMove(e){
+    var r = sec.getBoundingClientRect();
+    mx = ((e.clientX - r.left) / r.width - 0.5) * 2;
+    my = ((e.clientY - r.top) / r.height - 0.5) * 2;
+  }
+  function onLeave(){ mx = 0; my = 0; }
+  sec.addEventListener('pointermove', onMove, {passive:true});
+  sec.addEventListener('pointerleave', onLeave);
+  raf = requestAnimationFrame(tick);
+  return function(){
+    live = false;
+    cancelAnimationFrame(raf);
+    sec.removeEventListener('pointermove', onMove);
+    sec.removeEventListener('pointerleave', onLeave);
+    arc.style.removeProperty('--px');
+    arc.style.removeProperty('--py');
+  };
+}
+function initHero(){
+  var sec = $('#hero');
+  var arc = $('#heroArc');
+  var track = $('#heroArcTrack');
+  var wordEl = $('#heroRotateWord');
+  if (!sec || !arc || !track) return;
+  buildHeroArc(track);
+  hydrateImgs(sec);
+  if (hero && hero.sec === sec){
+    if (wordEl){ hero.wordEl = wordEl; startHeroRotate(); }
+    return;
+  }
+  if (hero && hero.unparallax) hero.unparallax();
+  hero = {
+    sec:sec, arc:arc, track:track, vis:true,
+    wordEl:wordEl, wordI:0, rotateT:0,
+    unparallax: bindHeroParallax(sec, arc)
+  };
+  if (wordEl) wordEl.textContent = HERO_WORDS[0];
   if ('IntersectionObserver' in window)
     new IntersectionObserver(function(e){ if (hero) hero.vis = e[0].isIntersecting; },{threshold:0.01}).observe(sec);
+  if (!sec.classList.contains('in') && !document.body.classList.contains('is-loading'))
+    sec.classList.add('in');
+  startHeroRotate();
 }
 function teardownHero(){
-  if (!hero) return;
-  try {
-    hero.items.forEach(function(it){
-      if (it.m.geometry) it.m.geometry.dispose();
-      if (it.m.material) it.m.material.dispose();
-    });
-    hero.r.dispose();
-  } catch (e) {}
+  stopHeroRotate();
+  if (hero && hero.unparallax) hero.unparallax();
   hero = null;
 }
 window.__lenswearBootHero = initHero;
@@ -458,24 +591,6 @@ function frame(now){
     if (d !== onDark){ onDark = d; document.body.classList.toggle('on-dark', d); }
   }
 
-  /* hero */
-  if (hero && hero.vis && hero.sec && document.contains(hero.sec)){
-    var hr = hero.sec.getBoundingClientRect();
-    var hp = clamp(-hr.top / Math.max(1, hero.sec.offsetHeight), 0, 1);
-    hero.dolly = lerp(hero.dolly, hp*9, K(0.08));
-    hero.cam.position.z = hero.dolly;
-    hero.cam.position.x = lerp(hero.cam.position.x, (CUR.mx||0)*1.5, K(0.045));
-    hero.cam.position.y = lerp(hero.cam.position.y, -(CUR.my||0)*0.9, K(0.045));
-    hero.cam.lookAt(0, 0, hero.dolly - 12);
-    if (!scrolling){
-      hero.items.forEach(function(it,i){
-        it.m.position.y = it.base + Math.sin(t*0.35 + it.ph)*0.16;
-        it.m.rotation.z = Math.sin(t*0.22 + it.ph)*0.012 + (i%2?0.012:-0.012);
-      });
-    }
-    hero.r.render(hero.scene, hero.cam);
-  }
-
   /* flight */
   if (flight && flight.vis){
     var fr = flight.sec.getBoundingClientRect();
@@ -542,11 +657,6 @@ var GAL = $$('.gal .g').map(function(f){
 /* ---------------- resize ---------------- */
 function onResize(){
   vh = innerHeight; vw = innerWidth;
-  if (hero && hero.sec && document.contains(hero.sec)){
-    var s = hero.sec;
-    hero.r.setSize(s.clientWidth, s.clientHeight, false);
-    hero.cam.aspect = s.clientWidth/s.clientHeight; hero.cam.updateProjectionMatrix();
-  }
   if (flight){
     layoutFlight();
     var w = flight.pin.clientWidth, h = flight.pin.clientHeight;

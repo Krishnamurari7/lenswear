@@ -6,6 +6,13 @@ export const metadata: Metadata = {
   title: "Lenswear Films — Wedding · Films · Post-Production · Mumbai",
   description:
     "Lenswear Films is a photography and cinematography studio in Goregaon, Mumbai. Weddings, commercial and fashion, concerts, and post-production. 7+ years, led by Naved Qureshi.",
+  icons: {
+    icon: [{ url: "/images/logo.png", type: "image/png" }],
+    apple: [{ url: "/images/logo.png", type: "image/png" }],
+  },
+  openGraph: {
+    images: [{ url: "/images/logo.png" }],
+  },
 };
 
 export const viewport: Viewport = {

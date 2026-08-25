@@ -51,31 +51,26 @@ export const siteMarkupChrome = `<div class="grain"></div>
 
 export const siteMarkupHero = `
   <!-- ============ HERO ============ -->
-  <section class="hero" id="hero" data-dark>
-    <canvas id="heroCanvas"></canvas>
-    <div class="hero-scrim"></div>
+  <section class="hero" id="hero">
     <div class="hero-in">
-      <div class="hero-top">
-        <p class="mono">Photography &amp; Cinematography<br>Since 2018 · Mumbai</p>
-        <p class="mono" style="text-align:right">Film City Road<br>Goregaon 400063</p>
+      <h1 class="hero-brand">
+        <span class="hero-rotate" id="heroRotate" aria-live="polite">
+          <span class="hero-rotate-word is-in" id="heroRotateWord">Wedding</span>
+        </span>
+      </h1>
+      <p class="hero-line">The film you deserve has never been shot before.</p>
+
+      <div class="hero-arc" id="heroArc" aria-hidden="true">
+        <div class="hero-arc-track" id="heroArcTrack"></div>
       </div>
 
-      <div class="hero-mid">
-        <img class="hero-logo" data-img="logo_line" alt="Lenswear Films">
-        <div class="hero-tag">
-          <span>Wedding</span><i>•</i><span>Films</span><i>•</i><span>Post-Production</span>
-        </div>
-      </div>
-
-      <div class="hero-base">
-        <p class="mono">7+ years · Weddings · Commercial · Concerts · Post</p>
-        <div class="cue"><i></i><span class="mono">Scroll to fly</span></div>
+      <p class="hero-copy">We film weddings, commercial work and concerts from a blank page. No templates, no stock cuts, no shortcuts.</p>
+      <div class="hero-cta">
+        <a href="https://wa.me/919022766668" target="_blank" rel="noopener" data-cursor="Chat">WhatsApp us</a>
+        <a href="/#works" data-cursor="Works">See Works</a>
       </div>
     </div>
   </section>
-
-  <!-- ============ PHOTO STRIP ============ -->
-  <div class="strip" data-dark aria-hidden="true"><div class="strip-track" id="strip"></div></div>
 `;
 
 export const siteMarkupFooter = `

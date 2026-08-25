@@ -1,7 +1,8 @@
 const WA_URL = "https://wa.me/919022766668";
 const MAP_QUERY =
   "16th Shree Wageshwari opp Satellite Royal Film City Road Pankaj Shah Marg Goregaon Mumbai 400063";
-const MAP_EMBED = `https://maps.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&z=17&hl=en&output=embed`;
+/* www.google.com + sandbox: maps.google.com embeds can navigate the top window away from /contact */
+const MAP_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&z=17&hl=en&output=embed`;
 const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAP_QUERY)}`;
 
 export default function ContactView() {
@@ -63,6 +64,7 @@ export default function ContactView() {
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
             allowFullScreen
+            sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
           />
         </div>
         <p className="mono contact-map-note">

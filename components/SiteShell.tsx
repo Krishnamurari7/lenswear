@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, type ReactNode } from "react";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { siteMarkupChrome, siteMarkupFooter } from "@/lib/markup";
 import NavGalleryDropdown from "@/components/NavGalleryDropdown";
 import WhatsAppToggle from "@/components/WhatsAppToggle";
@@ -48,13 +48,27 @@ function loadScript(src: string) {
   });
 }
 
+function isModifiedClick(e: MouseEvent) {
+  return e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0;
+}
+
 export default function SiteShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
+  const router = useRouter();
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     document.getElementById("nav")?.classList.remove("hide");
     document.body.classList.remove("menu-open");
-    if (pathname === "/contact") document.body.classList.add("on-dark");
+    document.body.classList.toggle("on-dark", pathname === "/contact");
+    document.body.classList.toggle("page-contact", pathname === "/contact");
+    // Dark hero: keep nav light until site.js scroll sync runs
+    if (pathname === "/") {
+      const hero = document.getElementById("hero");
+      if (hero && hero.getBoundingClientRect().bottom > 72) {
+        document.body.classList.add("on-dark");
+      }
+    }
     const burger = document.getElementById("burger");
     burger?.setAttribute("aria-expanded", "false");
     burger?.setAttribute("aria-label", "Open menu");
@@ -65,6 +79,43 @@ export default function SiteShell({ children }: { children: ReactNode }) {
       a.classList.toggle("active", pathname === "/contact" && href === "/contact");
     });
   }, [pathname]);
+
+  /* Client-side nav for chrome links so /contact does not full-reload into map redirects */
+  useEffect(() => {
+    function onClick(e: MouseEvent) {
+      if (e.defaultPrevented || isModifiedClick(e)) return;
+      const a = (e.target as Element | null)?.closest?.(
+        "a[href]"
+      ) as HTMLAnchorElement | null;
+      if (!a) return;
+      if (a.target && a.target !== "_self") return;
+      const href = a.getAttribute("href");
+      if (!href || !href.startsWith("/") || href.startsWith("//")) return;
+      if (href.startsWith("/#")) {
+        const onHome = pathname === "/";
+        if (onHome) {
+          const id = href.slice(2);
+          const el = id ? document.getElementById(id) : null;
+          if (el) {
+            e.preventDefault();
+            el.scrollIntoView({ behavior: "smooth" });
+            history.replaceState(null, "", href);
+          }
+          return;
+        }
+        e.preventDefault();
+        router.push(href);
+        return;
+      }
+      if (href === "/contact" || href.startsWith("/contact?") || href === "/") {
+        e.preventDefault();
+        if (href === pathname || (href === "/" && pathname === "/")) return;
+        router.push(href);
+      }
+    }
+    document.addEventListener("click", onClick);
+    return () => document.removeEventListener("click", onClick);
+  }, [pathname, router]);
 
   useEffect(() => {
     if (window.__LENSWEAR_BOOTED) return;

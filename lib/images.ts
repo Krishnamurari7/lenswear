@@ -1,7 +1,7 @@
 /** Image registry for Lenswear Films — paths under /public */
 export const IMG: Record<string, string> = {
-  logo_mark: "/images/logo_mark.svg",
-  logo_line: "/images/logo_line.svg",
+  logo_mark: "/images/logo.png",
+  logo_line: "/images/logo.png",
 
   ct1: "/Weddings/0R9A2935.JPG",
   ct2: "/Weddings/0R9A1496.JPG",
