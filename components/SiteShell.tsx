@@ -13,6 +13,7 @@ declare global {
     __lenswearScanReveals?: () => void;
     __lenswearBootHero?: () => void;
     __lenswearTeardownHero?: () => void;
+    __lenswearNavigate?: (href: string) => void;
   }
 }
 
@@ -80,8 +81,14 @@ export default function SiteShell({ children }: { children: ReactNode }) {
     });
   }, [pathname]);
 
-  /* Client-side nav for chrome links so /contact does not full-reload into map redirects */
+  /* Soft client nav — keeps /contact stable (no full reload / map hijack race) */
   useEffect(() => {
+    function go(href: string) {
+      if (href === pathname || (href === "/" && pathname === "/")) return;
+      router.push(href);
+    }
+    window.__lenswearNavigate = go;
+
     function onClick(e: MouseEvent) {
       if (e.defaultPrevented || isModifiedClick(e)) return;
       const a = (e.target as Element | null)?.closest?.(
@@ -104,17 +111,19 @@ export default function SiteShell({ children }: { children: ReactNode }) {
           return;
         }
         e.preventDefault();
-        router.push(href);
+        go(href);
         return;
       }
       if (href === "/contact" || href.startsWith("/contact?") || href === "/") {
         e.preventDefault();
-        if (href === pathname || (href === "/" && pathname === "/")) return;
-        router.push(href);
+        go(href);
       }
     }
     document.addEventListener("click", onClick);
-    return () => document.removeEventListener("click", onClick);
+    return () => {
+      document.removeEventListener("click", onClick);
+      if (window.__lenswearNavigate === go) delete window.__lenswearNavigate;
+    };
   }, [pathname, router]);
 
   useEffect(() => {

@@ -239,6 +239,10 @@ var nav = $('#nav');
         if (el) el.scrollIntoView({behavior: REDUCED?'auto':'smooth'});
         return;
       }
+      if (typeof window.__lenswearNavigate === 'function') {
+        window.__lenswearNavigate('/contact');
+        return;
+      }
       location.assign('/contact');
     });
     box.appendChild(row);

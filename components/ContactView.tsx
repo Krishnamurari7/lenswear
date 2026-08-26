@@ -1,8 +1,11 @@
 const WA_URL = "https://wa.me/919022766668";
 const MAP_QUERY =
   "16th Shree Wageshwari opp Satellite Royal Film City Road Pankaj Shah Marg Goregaon Mumbai 400063";
-/* www.google.com + sandbox: maps.google.com embeds can navigate the top window away from /contact */
-const MAP_EMBED = `https://www.google.com/maps?q=${encodeURIComponent(MAP_QUERY)}&z=17&hl=en&output=embed`;
+/* Studio: Film City Road, Goregaon — OSM embed (Google Maps iframes can top-navigate away from /contact) */
+const MAP_LAT = 19.1645;
+const MAP_LON = 72.8495;
+const MAP_DELTA = 0.012;
+const MAP_EMBED = `https://www.openstreetmap.org/export/embed.html?bbox=${MAP_LON - MAP_DELTA}%2C${MAP_LAT - MAP_DELTA * 0.7}%2C${MAP_LON + MAP_DELTA}%2C${MAP_LAT + MAP_DELTA * 0.7}&layer=mapnik&marker=${MAP_LAT}%2C${MAP_LON}`;
 const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAP_QUERY)}`;
 
 export default function ContactView() {
@@ -59,12 +62,10 @@ export default function ContactView() {
       <div className="wrap contact-map-wrap">
         <div className="contact-map">
           <iframe
-            title="Lenswear Films studio on Google Maps"
+            title="Lenswear Films studio location"
             src={MAP_EMBED}
             loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-            allowFullScreen
-            sandbox="allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox"
+            referrerPolicy="no-referrer"
           />
         </div>
         <p className="mono contact-map-note">
