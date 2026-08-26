@@ -450,22 +450,36 @@ function initHero(){
   var arc = $('#heroArc');
   var track = $('#heroArcTrack');
   var wordEl = $('#heroRotateWord');
+  var bgVideo = sec && sec.querySelector('.hero-bg-video');
   if (!sec || !arc || !track) return;
   buildHeroArc(track);
   hydrateImgs(sec);
+  if (bgVideo){
+    bgVideo.muted = true;
+    var tryPlay = function(){ bgVideo.play().catch(function(){}); };
+    tryPlay();
+    bgVideo.addEventListener('loadeddata', tryPlay, {once:true});
+  }
   if (hero && hero.sec === sec){
     if (wordEl){ hero.wordEl = wordEl; startHeroRotate(); }
     return;
   }
   if (hero && hero.unparallax) hero.unparallax();
   hero = {
-    sec:sec, arc:arc, track:track, vis:true,
+    sec:sec, arc:arc, track:track, vis:true, bgVideo:bgVideo || null,
     wordEl:wordEl, wordI:0, rotateT:0,
     unparallax: bindHeroParallax(sec, arc)
   };
   if (wordEl) wordEl.textContent = HERO_WORDS[0];
   if ('IntersectionObserver' in window)
-    new IntersectionObserver(function(e){ if (hero) hero.vis = e[0].isIntersecting; },{threshold:0.01}).observe(sec);
+    new IntersectionObserver(function(e){
+      if (!hero) return;
+      hero.vis = e[0].isIntersecting;
+      if (hero.bgVideo){
+        if (hero.vis) hero.bgVideo.play().catch(function(){});
+        else hero.bgVideo.pause();
+      }
+    },{threshold:0.01}).observe(sec);
   if (!sec.classList.contains('in') && !document.body.classList.contains('is-loading'))
     sec.classList.add('in');
   startHeroRotate();

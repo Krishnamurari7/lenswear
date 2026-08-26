@@ -52,6 +52,18 @@ export const siteMarkupChrome = `<div class="grain"></div>
 export const siteMarkupHero = `
   <!-- ============ HERO ============ -->
   <section class="hero" id="hero">
+    <div class="hero-bg" aria-hidden="true">
+      <video
+        class="hero-bg-video"
+        src="/Video/${encodeURIComponent("HD __ KAJAL A. __ MOBILLA.mp4")}"
+        poster="/Video/HD____KAJAL_A____MOBILLA-poster.jpg"
+        autoplay
+        muted
+        loop
+        playsinline
+        preload="auto"
+      ></video>
+    </div>
     <div class="hero-in">
       <h1 class="hero-brand">
         <span class="hero-rotate" id="heroRotate" aria-live="polite">
