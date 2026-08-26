@@ -94,6 +94,7 @@ $$('[data-img]').forEach(function(el){
     else {
       loader.classList.add('done');
       document.body.classList.remove('is-loading');
+      window.__LENSWEAR_INTRO_DONE = true;
       var heroEl = $('#hero');
       if (heroEl) heroEl.classList.add('in');
     }

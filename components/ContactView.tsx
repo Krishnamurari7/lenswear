@@ -1,3 +1,7 @@
+"use client";
+
+import { useEffect, useState } from "react";
+
 const WA_URL = "https://wa.me/919022766668";
 const MAP_QUERY =
   "16th Shree Wageshwari opp Satellite Royal Film City Road Pankaj Shah Marg Goregaon Mumbai 400063";
@@ -8,7 +12,40 @@ const MAP_DELTA = 0.012;
 const MAP_EMBED = `https://www.openstreetmap.org/export/embed.html?bbox=${MAP_LON - MAP_DELTA}%2C${MAP_LAT - MAP_DELTA * 0.7}%2C${MAP_LON + MAP_DELTA}%2C${MAP_LAT + MAP_DELTA * 0.7}&layer=mapnik&marker=${MAP_LAT}%2C${MAP_LON}`;
 const MAP_LINK = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAP_QUERY)}`;
 
+const ROTATE_WORDS = [
+  "wedding",
+  "birthday",
+  "anniversary",
+  "concert",
+  "film",
+  "event",
+];
+
 export default function ContactView() {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [phase, setPhase] = useState<"in" | "out">("in");
+
+  useEffect(() => {
+    const reduced =
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) return;
+
+    let outTimer = 0;
+    const hold = window.setInterval(() => {
+      setPhase("out");
+      outTimer = window.setTimeout(() => {
+        setWordIndex((i) => (i + 1) % ROTATE_WORDS.length);
+        setPhase("in");
+      }, 320);
+    }, 2800);
+
+    return () => {
+      window.clearInterval(hold);
+      window.clearTimeout(outTimer);
+    };
+  }, []);
+
   return (
     <section className="contact sec" id="contact" data-dark>
       <div className="wrap contact-in">
@@ -19,7 +56,12 @@ export default function ContactView() {
             <br />
             about your
             <br />
-            <em>wedding.</em>
+            <em
+              className={`contact-rotate-word is-${phase}`}
+              aria-live="polite"
+            >
+              {ROTATE_WORDS[wordIndex]}.
+            </em>
           </h2>
           <a
             className="wa"

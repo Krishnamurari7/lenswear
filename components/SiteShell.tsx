@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useState, type ReactNode } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import { siteMarkupChrome, siteMarkupFooter } from "@/lib/markup";
 import NavGalleryDropdown from "@/components/NavGalleryDropdown";
@@ -10,11 +10,25 @@ declare global {
   interface Window {
     THREE?: unknown;
     __LENSWEAR_BOOTED?: boolean;
+    __LENSWEAR_INTRO_DONE?: boolean;
     __lenswearScanReveals?: () => void;
     __lenswearBootHero?: () => void;
     __lenswearTeardownHero?: () => void;
     __lenswearNavigate?: (href: string) => void;
   }
+}
+
+/** Keep the same __html payload so React never resets chrome/footer DOM (loader classes). */
+function StaticMarkup({ html }: { html: string }) {
+  const [payload] = useState(() => ({ __html: html }));
+  return <div suppressHydrationWarning dangerouslySetInnerHTML={payload} />;
+}
+
+function dismissIntroLoader() {
+  document.body.classList.remove("is-loading");
+  const loader = document.getElementById("loader");
+  if (!loader) return;
+  loader.classList.add("go", "done");
 }
 
 function loadScript(src: string) {
@@ -57,6 +71,22 @@ export default function SiteShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
 
+  /* Before paint: clear a resurrected blank loader after soft nav / remount */
+  useLayoutEffect(() => {
+    const loader = document.getElementById("loader");
+    const resurrected =
+      !!loader &&
+      !loader.classList.contains("done") &&
+      !loader.classList.contains("go");
+    if (
+      window.__LENSWEAR_INTRO_DONE ||
+      (window.__LENSWEAR_BOOTED && resurrected)
+    ) {
+      dismissIntroLoader();
+      window.__LENSWEAR_INTRO_DONE = true;
+    }
+  }, [pathname]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     document.getElementById("nav")?.classList.remove("hide");
@@ -69,6 +99,12 @@ export default function SiteShell({ children }: { children: ReactNode }) {
       if (hero && hero.getBoundingClientRect().bottom > 72) {
         document.body.classList.add("on-dark");
       }
+      // Fresh home mount after soft nav — ensure hero reveal + WebGL boot
+      requestAnimationFrame(() => {
+        window.__lenswearBootHero?.();
+        document.getElementById("hero")?.classList.add("in");
+        window.__lenswearScanReveals?.();
+      });
     }
     const burger = document.getElementById("burger");
     burger?.setAttribute("aria-expanded", "false");
@@ -77,7 +113,10 @@ export default function SiteShell({ children }: { children: ReactNode }) {
     const links = document.querySelectorAll(".nav-mid a, .menu ul a");
     links.forEach((a) => {
       const href = a.getAttribute("href") || "";
-      a.classList.toggle("active", pathname === "/contact" && href === "/contact");
+      a.classList.toggle(
+        "active",
+        pathname === "/contact" && href === "/contact"
+      );
     });
   }, [pathname]);
 
@@ -127,7 +166,12 @@ export default function SiteShell({ children }: { children: ReactNode }) {
   }, [pathname, router]);
 
   useEffect(() => {
-    if (window.__LENSWEAR_BOOTED) return;
+    if (window.__LENSWEAR_BOOTED) {
+      // Remount after boot — never leave a blank loader up
+      dismissIntroLoader();
+      window.__LENSWEAR_INTRO_DONE = true;
+      return;
+    }
     window.__LENSWEAR_BOOTED = true;
 
     (async () => {
@@ -145,16 +189,10 @@ export default function SiteShell({ children }: { children: ReactNode }) {
 
   return (
     <>
-      <div
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: siteMarkupChrome }}
-      />
+      <StaticMarkup html={siteMarkupChrome} />
       <NavGalleryDropdown />
       <main id="top">{children}</main>
-      <div
-        suppressHydrationWarning
-        dangerouslySetInnerHTML={{ __html: siteMarkupFooter }}
-      />
+      <StaticMarkup html={siteMarkupFooter} />
       <WhatsAppToggle />
     </>
   );
