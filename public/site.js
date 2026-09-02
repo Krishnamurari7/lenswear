@@ -31,7 +31,19 @@ var IMG = {
   "mx1": "/Weddings/DEE_6636.JPG",
   "mx2": "/Video/Gurmeet-poster.jpg",
   "mx3": "/Weddings/IMG_8202.jpg",
-  "si1": "/Weddings/IMG_8119.jpg"
+  "si1": "/Weddings/IMG_8119.jpg",
+
+  "ms1": "/moving%20slide/processed_0R9A3407.jpg",
+  "ms2": "/moving%20slide/processed_0R9A5116.jpg",
+  "ms3": "/moving%20slide/processed_1S7A3888.jpg",
+  "ms4": "/moving%20slide/processed_1S7A3943.jpg",
+  "ms5": "/moving%20slide/processed_5DM43210.jpg",
+  "ms6": "/moving%20slide/processed_5DM43226.jpg",
+  "ms7": "/moving%20slide/processed_DEE_2245.jpg",
+  "ms8": "/moving%20slide/processed_IMG_7963.jpg",
+  "ms9": "/moving%20slide/processed_IMG_7993.jpg",
+  "ms10": "/moving%20slide/processed_IMG_8202.jpg",
+  "ms11": "/moving%20slide/processed_Murtuza%20%26%20Mehtaab.jpg"
 };
 
 
@@ -70,9 +82,9 @@ var SERVICES = [
   ['Wedding & Events','Weddings, receptions, concerts and everything that only happens once.','srv4']
 ];
 var HERO_ARC = [
-  'ct1','jd1','srv1','srv4','ct3',
-  'srv5','desk','srv6','jd2','sm1',
-  'naved1','srv3','mx1','sm2','naved3'
+  'ms1','ms2','ms3','ms4','ms5',
+  'ms6','ms7','ms8','ms9','ms10',
+  'ms11'
 ];
 
 /* ---------------- images into the DOM ---------------- */
