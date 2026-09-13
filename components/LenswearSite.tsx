@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import { siteMarkupHero } from "@/lib/markup";
 import PortfolioWorks from "@/components/portfolio/PortfolioWorks";
-import Testimonials from "@/components/testimonials/Testimonials";
+import GetInTouch from "@/components/contact/GetInTouch";
 
 function scanReveals() {
   window.__lenswearScanReveals?.();
@@ -37,7 +37,7 @@ export default function LenswearSite() {
         dangerouslySetInnerHTML={{ __html: siteMarkupHero }}
       />
       <PortfolioWorks />
-      <Testimonials />
+      <GetInTouch />
     </>
   );
 }

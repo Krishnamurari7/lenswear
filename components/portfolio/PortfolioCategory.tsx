@@ -19,6 +19,7 @@ export default function PortfolioCategory({ category }: Props) {
       <PortfolioBanner
         title={category.title}
         image={category.banner}
+        video={category.bannerVideo}
         titleId={`${category.id}-title`}
         focal={category.bannerFocal}
       />

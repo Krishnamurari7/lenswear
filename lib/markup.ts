@@ -21,7 +21,7 @@ export const siteMarkupChrome = `<div class="grain"></div>
   <nav class="nav-mid">
     <div id="nav-gallery-slot"></div>
     <a href="/#works">Works</a>
-    <a href="/#voices">Voices</a>
+    <a href="/#touch">Enquire</a>
     <a href="/contact">Contact</a>
   </nav>
   <div class="nav-right">
@@ -37,7 +37,7 @@ export const siteMarkupChrome = `<div class="grain"></div>
   <div id="nav-gallery-menu-slot"></div>
   <ul>
     <li><a href="/#works">Works</a></li>
-    <li><a href="/#voices">Voices</a></li>
+    <li><a href="/#touch">Enquire</a></li>
     <li><a href="/contact">Contact</a></li>
   </ul>
   <a class="nav-wa" href="https://wa.me/919022766668" target="_blank" rel="noopener">WhatsApp us</a>
@@ -87,7 +87,7 @@ export const siteMarkupHero = `
 
 export const siteMarkupFooter = `
 <!-- ============ FOOTER ============ -->
-<footer class="foot" data-dark>
+<footer class="foot">
   <div class="wrap">
     <div class="foot-main">
       <div class="foot-col">
@@ -104,7 +104,7 @@ export const siteMarkupFooter = `
         <p>16th, Shree Wageshwari, opp. Satellite royal<br>Film City Road, Pankaj Shah Marg,<br>Goregaon, Mumbai, Maharashtra 400063</p>
       </div>
       <div class="foot-col foot-col-cta">
-        <h4>Enquire</h4>
+        <h4>Bookings Open</h4>
         <p class="foot-cta-copy">Now booking 2026 &amp; 2027 weddings.</p>
         <a class="foot-cta" href="https://wa.me/919022766668" target="_blank" rel="noopener"><span>WhatsApp us</span></a>
       </div>

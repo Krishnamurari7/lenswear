@@ -15,6 +15,8 @@ export type PortfolioCategory = {
   id: string;
   title: string;
   banner: string;
+  /** Optional looping background video; `banner` is used as poster fallback */
+  bannerVideo?: string;
   bannerFocal?: string;
   projects: PortfolioProject[];
 };
@@ -27,27 +29,33 @@ export const PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
   {
     id: "weddings",
     title: "Weddings",
-    banner: asset("Weddings", "0R9A2935.JPG"),
-    bannerFocal: "center 68%",
+    banner: asset("Weddings", "W6.jpg"),
+    bannerVideo: asset("Weddings", "Background Wedding.mp4"),
+    bannerFocal: "center 40%",
     projects: [
-      { name: "Couple", image: asset("Weddings", "0R9A1496.JPG") },
+      { name: "Ceremony", image: asset("Weddings", "W6.jpg") },
       {
         name: "Celebration",
-        image: asset("Weddings", "0R9A2935.JPG"),
-        focal: "center 70%",
+        image: asset("Weddings", "W2.JPG"),
+        focal: "center 35%",
       },
-      { name: "Ceremony", image: asset("Weddings", "IMG_8119.jpg") },
+      {
+        name: "Sangeet",
+        image: asset("Weddings", "0R9A2935.JPG"),
+        video: asset("Weddings", "Sangeet .mp4"),
+        focal: "center 40%",
+      },
       {
         name: "Bridal",
         image: asset("Weddings", "DEE_6636.JPG"),
         focal: "center 22%",
       },
       {
-        name: "Intimate",
-        image: asset("Weddings", "3 copy.JPG"),
+        name: "Reception",
+        image: asset("Weddings", "W5.JPG"),
         focal: "center 40%",
       },
-      { name: "Candid", image: asset("Weddings", "IMG_8118.jpg") },
+      { name: "Couple", image: asset("Weddings", "22.jpg") },
     ],
   },
   {
@@ -62,15 +70,15 @@ export const PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
         focal: "center 32%",
       },
       {
-        name: "Shubman Gill — Studio",
-        image: asset("BTS", "Image-55383.jpg"),
-        focal: "center 38%",
+        name: "Sunil Chettri",
+        image: asset("Commercial", "Sunil Chettri-poster.jpg"),
+        video: asset("Commercial", "Sunil Chettri.mp4"),
+        focal: "center 28%",
       },
       {
-        name: "Kajal Aggarwal — Brand Film",
-        image: asset("Video", "KAjal-poster.jpg"),
-        video: asset("Video", "KAjal.mp4"),
-        focal: "center 16%",
+        name: "Fashion Photo",
+        image: asset("Commercial", "Fashion shoot.png"),
+        focal: "center 30%",
       },
       {
         name: "Kajal Aggarwal — Mobilla",
@@ -85,9 +93,9 @@ export const PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
         focal: "72% 42%",
       },
       {
-        name: "Shubman Gill — Ad Film",
-        image: asset("Video", "Video-28015-poster.jpg"),
-        video: asset("Video", "Video-28015.mp4"),
+        name: "School Events",
+        image: asset("Commercial", "School Events-poster.jpg"),
+        video: asset("Commercial", "School Events.mp4"),
         focal: "center 40%",
       },
     ],
@@ -99,9 +107,9 @@ export const PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
     bannerFocal: "42% 48%",
     projects: [
       {
-        name: "On set",
-        image: asset("BTS", "_DSC7900.JPG"),
-        focal: "42% 45%",
+        name: "Sharwari Ad",
+        image: asset("Film", "SHARWARI WAGH.png"),
+        focal: "center 22%",
       },
       {
         name: "Scene",
@@ -109,27 +117,26 @@ export const PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
         focal: "58% 40%",
       },
       {
-        name: "Coverage",
-        image: asset("BTS", "_DSC8019.JPG"),
-        focal: "58% 38%",
+        name: "Ad BTS",
+        image: asset("Film", "Ad BTS-poster.jpg"),
+        video: asset("Film", "Ad BTS .mp4"),
+        focal: "center 40%",
       },
       {
-        name: "Cinematography",
-        image: asset("Weddings", "IMG_7947.jpg"),
-        fit: "contain",
+        name: "Shoot BTS",
+        image: asset("Film", "Shoot Bts-poster.jpg"),
+        video: asset("Film", "Shoot Bts.mp4"),
+        focal: "center 35%",
       },
       {
-        name: "Editorial",
-        image: asset("Weddings", "IMG_8202.jpg"),
-        fit: "contain",
+        name: "Short Film",
+        image: asset("Film", "Short film.png"),
+        focal: "center 40%",
       },
       {
-        name: "Campaign still",
-        image: asset(
-          "Weddings",
-          "Monochrome Minimalist Fashion Instagram Post 2.PNG"
-        ),
-        fit: "contain",
+        name: "Bhumi Pednekar",
+        image: asset("Film", "Bhumi Pednekar.png"),
+        focal: "center 28%",
       },
     ],
   },
@@ -137,12 +144,13 @@ export const PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
     id: "concerts",
     title: "Events",
     banner: asset("Event", "Image-54987.jpg"),
+    bannerVideo: asset("Event", "Backgrount Honey singh.mp4"),
     bannerFocal: "center 28%",
     projects: [
       {
-        name: "Live vocal",
-        image: asset("Event", "Image-84673.jpg"),
-        focal: "38% 28%",
+        name: "Performer",
+        image: asset("Event", "Performer.png"),
+        focal: "center 28%",
       },
       {
         name: "Stage",
@@ -155,14 +163,23 @@ export const PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
         focal: "58% 22%",
       },
       {
-        name: "Duet",
-        image: asset("Event", "Image-66293.jpg"),
-        focal: "center 32%",
+        name: "Harman",
+        image: asset(
+          "Event",
+          "ChatGPT Image Aug 30, 2026, 08_48_03 PM.png"
+        ),
+        video: asset("Event", "Harman.mp4"),
+        focal: "center 28%",
       },
       {
         name: "Solo",
         image: asset("Event", "Image-85372.jpg"),
         focal: "center 12%",
+      },
+      {
+        name: "Artist",
+        image: asset("Event", "Artist.png"),
+        focal: "center 22%",
       },
     ],
   },

@@ -20,13 +20,13 @@ var IMG = {
   "srv1": "/BTS/Image-64718.jpg",
   "srv2": "/BTS/Image-55383.jpg",
   "srv3": "/Weddings/IMG_8118.jpg",
-  "srv4": "/Event/Image-84673.jpg",
+  "srv4": "/Event/Performer.png",
   "srv5": "/Event/Image-54987.jpg",
   "srv6": "/Event/Image-63492.jpg",
 
   "jd1": "/Weddings/0R9A1496.JPG",
   "jd2": "/Weddings/" + encodeURIComponent("3 copy.JPG"),
-  "sm1": "/Event/Image-66293.jpg",
+  "sm1": "/Event/Artist.png",
   "sm2": "/Event/Image-85372.jpg",
   "mx1": "/Weddings/DEE_6636.JPG",
   "mx2": "/Video/Gurmeet-poster.jpg",
@@ -188,7 +188,7 @@ var nav = $('#nav');
       });
       return;
     }
-    var ids = ['works','voices'];
+    var ids = ['works','touch'];
     var cur = '';
     for (var i=0;i<ids.length;i++){
       var el = document.getElementById(ids[i]);

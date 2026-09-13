@@ -3,6 +3,14 @@
    paper + ink, one signal red. geometric caps, mono telemetry,
    the client's own script logo as the only calligraphic mark.
    ========================================================= */
+@font-face{
+  font-family:"Astoria";
+  src:url("/FONT/Astoria.otf") format("opentype"),
+      url("/FONT/Astoria.ttf") format("truetype");
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
 :root{
   --paper:#EDEDED;
   --gray:#B5B5B5;
@@ -14,9 +22,11 @@
   --rec:#E1341E;
   --line:rgba(11,11,12,.18);
   --line-d:rgba(237,237,237,.16);
+  --cream:#F0ECE4;
   --disp:"Jost",'Futura',"Century Gothic",system-ui,sans-serif;
   --sans:"DM Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,sans-serif;
   --mono:"DM Mono",ui-monospace,"SF Mono",Menlo,monospace;
+  --astoria:"Astoria",Georgia,"Times New Roman",serif;
   --pad:clamp(18px,4.4vw,64px);
   --ease:cubic-bezier(.16,1,.3,1);
 }
@@ -642,17 +652,19 @@ body.page-contact{background:var(--ink)}
 }
 
 /* ---- footer ---- */
-.foot{background:var(--ink);color:var(--paper);
+.foot{background:var(--cream);color:var(--ink);
   padding:clamp(48px,8vh,80px) var(--pad) 22px}
 .foot-main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.35fr) auto;
   gap:clamp(28px,5vw,72px);align-items:start;
   padding-bottom:clamp(36px,5.5vh,56px)}
 .foot-col h4{margin:0 0 16px;font-family:var(--mono);font-size:9.5px;letter-spacing:.22em;
-  text-transform:uppercase;color:rgba(230,230,230,.42);font-weight:400}
+  text-transform:uppercase;color:rgba(11,11,12,.42);font-weight:400}
+.foot-col-cta h4{font-family:var(--astoria);font-size:clamp(18px,2vw,24px);
+  letter-spacing:.04em;color:var(--ink);font-weight:400}
 .foot-col ul{margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
 .foot-col li{list-style:none;margin:0}
 .foot-col a:not(.foot-cta),.foot-col p{font-size:15px;line-height:1.7;
-  color:rgba(230,230,230,.82);transition:color .35s}
+  color:rgba(11,11,12,.78);transition:color .35s}
 .foot-col a:not(.foot-cta){display:inline-flex;align-items:center;gap:8px;padding:4px 0}
 .foot-col a:not(.foot-cta):hover{color:var(--rec)}
 .foot-col a:not(.foot-cta)::after{content:"↗";font-size:10px;opacity:.35;
@@ -662,16 +674,17 @@ body.page-contact{background:var(--ink)}
 .foot-cta{display:inline-flex;align-items:center;padding:12px 22px;
   border:1px solid var(--rec);border-radius:100px;position:relative;overflow:hidden;
   font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
-  color:var(--paper);transition:color .5s}
+  color:var(--ink);transition:color .5s}
 .foot-cta span{position:relative;z-index:2}
 .foot-cta::before{content:"";position:absolute;inset:0;background:var(--rec);
   transform:translateY(101%);transition:transform .6s var(--ease)}
 .foot-cta:hover{color:#fff}
 .foot-cta:hover::before{transform:translateY(0)}
 .foot-base{display:flex;align-items:center;justify-content:space-between;gap:16px;
-  flex-wrap:wrap;padding-top:18px;border-top:1px solid var(--line-d)}
+  flex-wrap:wrap;padding-top:18px;border-top:1px solid var(--line)}
+.foot .mono{color:rgba(11,11,12,.55)}
 .foot-brand{display:block;width:clamp(100px,12vw,140px);flex-shrink:0;margin-right:auto}
-.foot-brand img{width:100%;height:auto;display:block;filter:invert(1);opacity:.88;
+.foot-brand img{width:100%;height:auto;display:block;opacity:.88;
   clip-path:inset(0 100% 0 0);transition:clip-path 1.2s cubic-bezier(.6,0,.2,1)}
 .foot-brand.in img{clip-path:inset(0 0 0 0)}
 
@@ -733,41 +746,38 @@ body.page-contact{background:var(--ink)}
   .pf-banner-title{font-size:clamp(24px,6vw,30px)}
 }
 
-/* ---- testimonials — Taj Studio carousel ---- */
-.tm{background:var(--gray);color:var(--ink);padding:clamp(50px,8vw,80px) var(--pad);
+/* ---- get in touch — horizontal enquiry form ---- */
+.git{background:var(--cream);color:var(--ink);padding:clamp(50px,8vw,88px) var(--pad);
   border-top:1px solid var(--line)}
-.tm-inner{max-width:1620px;margin:0 auto;width:100%}
-.tm-title{margin:0 0 clamp(28px,4vw,40px);font-size:clamp(28px,4vw,36px);
-  text-transform:uppercase;letter-spacing:.04em;text-align:center;font-weight:300}
-.tm-carousel{position:relative;padding:0 clamp(36px,5vw,52px)}
-.tm-track{display:flex;gap:clamp(16px,2vw,24px);overflow-x:auto;scroll-snap-type:x mandatory;
-  scroll-behavior:smooth;-webkit-overflow-scrolling:touch;scrollbar-width:none;padding:4px 0}
-.tm-track::-webkit-scrollbar{display:none}
-.tm-item{flex:0 0 calc(25% - 18px);scroll-snap-align:start;min-width:0}
-.tm-photo{overflow:hidden;background:var(--sand);aspect-ratio:3/2}
-.tm-photo img{width:100%;height:100%;object-fit:cover;object-position:center 28%;display:block}
-.tm-name{margin:10px 0 0;font-family:var(--sans);font-size:14px;font-weight:600;
-  text-transform:uppercase;letter-spacing:.04em;text-align:center;color:var(--ink2)}
-.tm-quote{margin:10px 0 0;font-size:13px;line-height:1.65;color:var(--graphite);text-align:justify}
-.tm-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:2;
-  width:40px;height:40px;border-radius:50%;border:1px solid var(--line);
-  background:var(--white);color:var(--ink);font-size:28px;line-height:1;
-  display:grid;place-items:center;transition:background .3s,border-color .3s,opacity .3s}
-.tm-nav:hover:not(:disabled){background:var(--ink);color:var(--paper);border-color:var(--ink)}
-.tm-nav:disabled{opacity:.35;cursor:not-allowed}
-.tm-nav-prev{left:0}
-.tm-nav-next{right:0}
-@media (max-width:1100px){.tm-item{flex:0 0 calc(33.333% - 16px)}}
-@media (max-width:768px){
-  .tm-item{flex:0 0 calc(50% - 12px)}
-  .tm-carousel{padding:0 32px}
-  .tm-nav{width:32px;height:32px;font-size:22px}
+.git-inner{max-width:1100px;margin:0 auto;width:100%}
+.git-title{margin:0 0 clamp(32px,5vw,48px);font-family:var(--astoria);font-size:clamp(36px,5.5vw,56px);
+  font-weight:400;letter-spacing:.02em;text-align:center;line-height:1.05;text-transform:uppercase}
+.git-form{width:100%}
+.git-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(22px,3vw,32px) clamp(24px,4vw,48px)}
+.git-field{display:flex;flex-direction:column;gap:8px;min-width:0}
+.git-field>span{font-family:var(--sans);font-size:13px;font-weight:500;letter-spacing:.02em;
+  color:var(--ink2)}
+.git-req{color:var(--rec);margin-left:2px}
+.git-field input,.git-field select{width:100%;appearance:none;-webkit-appearance:none;
+  background:transparent;border:0;border-bottom:1px solid rgba(11,11,12,.28);
+  border-radius:0;padding:10px 0 12px;font-family:var(--sans);font-size:15px;line-height:1.4;
+  color:var(--ink);outline:none;transition:border-color .3s}
+.git-field select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='none' stroke='%230B0B0C' stroke-width='1.2' d='M1 1.5L6 6.5L11 1.5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 2px center;padding-right:22px;cursor:pointer}
+.git-field input::placeholder{color:rgba(11,11,12,.35)}
+.git-field input:focus,.git-field select:focus{border-bottom-color:var(--ink)}
+.git-actions{margin-top:clamp(36px,5vw,52px);display:flex;justify-content:center}
+.git-send{min-width:160px;padding:14px 36px;background:var(--ink);color:var(--paper);
+  font-family:var(--disp);font-size:13px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;
+  border:1px solid var(--ink);transition:background .3s,color .3s,border-color .3s}
+.git-send:hover{background:transparent;color:var(--ink)}
+@media (max-width:700px){
+  .git-grid{grid-template-columns:1fr;gap:22px}
+  .git-title{font-size:clamp(30px,9vw,40px)}
+  .git-send{width:100%}
 }
-@media (max-width:520px){
-  .tm-item{flex:0 0 calc(100% - 8px)}
-  .tm-quote{text-align:center;font-size:12.5px;line-height:1.6}
-  .tm-name{font-size:13px}
-  .tm-carousel{padding:0 clamp(28px,8vw,36px)}
+@media (max-width:480px){
+  .git{padding:clamp(40px,8vw,56px) var(--pad)}
 }
 
 @media (max-width:1024px){
@@ -832,9 +842,6 @@ body.page-contact{background:var(--ink)}
   .pf-grid-wrap{padding:clamp(28px,6vw,44px) var(--pad)}
   .pf-card{min-height:160px}
   .pf-card-name{font-size:11px;padding:6px 10px}
-  .tm{padding:clamp(36px,7vw,52px) var(--pad)}
-  .tm-carousel{padding:0 36px}
-  .tm-nav{width:36px;height:36px;font-size:20px}
   .foot{padding:clamp(40px,8vh,56px) var(--pad) max(18px,env(safe-area-inset-bottom))}
   .foot-main{grid-template-columns:1fr;gap:28px;padding-bottom:32px}
   .foot-base{flex-direction:column;align-items:flex-start;gap:10px}
@@ -846,7 +853,6 @@ body.page-contact{background:var(--ink)}
   .hero-cta{gap:16px;flex-direction:column;align-items:center}
   .hero-cta a{font-size:13px}
   .strip figure{height:clamp(88px,22vw,120px)}
-  .tm-carousel{padding:0 32px}
   .wa-fab{width:50px;height:50px}
   .wa-fab svg{width:24px;height:24px}
 }
